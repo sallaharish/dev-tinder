@@ -66,4 +66,16 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/logout", auth, async (req, res) => {
+  // Handle user logout logic here
+  try {
+    console.log("Received logout request for user:", req.user); // Log the user details for debugging
+    res.clearCookie('token'); // Clear the JWT token cookie
+    res.status(200).send('Logout successful'); // Send success response
+  } catch (error) {
+    console.error('Error during logout:', error);
+    res.status(500).send('Internal Server Error'); // Handle errors appropriately
+  }
+});
+
 module.exports = router; // Export the router to be used in the main app file

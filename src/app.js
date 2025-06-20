@@ -17,17 +17,17 @@ app.use(express.json());
 
 const authRouter= require('./routes/auth'); // Assuming you have an auth route defined in routes/auth.js
 // const profileRouter = require('./routes/profile'); // Assuming you have a users route defined in routes/users.js  
-// const requestRouter = require('./routes/request'); // Assuming you have a posts route defined in routes/posts.js
+const requestRouter = require('./routes/request'); // Assuming you have a posts route defined in routes/posts.js
 
-
+const userRouter = require('./routes/user'); // Importing the user router
 
 
 
 app.use("/", authRouter); // Assuming you have an auth route defined in routes/auth.js  
 // app.use("/", profileRouter); // Assuming you have a users route defined in routes/users.js
-// app.use("/", requestRouter); // Assuming you have a posts route defined in routes/posts.js
+app.use("/", requestRouter); // Assuming you have a posts route defined in routes/posts.js
 
-
+app.use("/", userRouter); // Using the user router for user-related routes
 
 
 connection().then
