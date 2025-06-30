@@ -64,6 +64,13 @@ userRouter.get("/user/connections", auth, async (req, res) => {
 userRouter.get("/feed", auth, async (req, res) => {
     try {
         const userId = req.user.userId; 
+        const page = parseInt(req.query.page) || 1; // Get the page number from query parameters or default to 1
+        let limit = parseInt(req.query.limit) || 10;
+        limit = Math.min(limit, 100); // Limit the maximum number of results to 100
+        const skip = (page - 1) * limit; // Calculate the number of documents
+         // Get the limit from query parameters or default to 10
+        console.log("Received request to get feed for user:", userId); // Log the user ID for debugging
+        // Importing the connection request model
         // Assuming the user ID is stored in the token
         const allConnections = await connectionRequest.find({
             $or: [
@@ -86,7 +93,7 @@ userRouter.get("/feed", auth, async (req, res) => {
                 { _id: { $nin: Array.from(hideUsersFromFeed) } },
                 { _id: userId } // Include the current user in the feed
              ]
-        }).select('firstName lastName')
+        }).select('firstName lastName').skip(skip).limit(limit); // Fetch feed data with pagination
        
         console.log("Feed data:", data); // Log the feed data for debugging
         res.status(200).json({message:"data fetched successfully" , data:feedData}); // Return feed data
