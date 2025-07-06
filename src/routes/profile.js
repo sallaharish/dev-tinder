@@ -12,13 +12,16 @@ const connection = require("../config/database"); // Importing the database conn
 
 // Route for getting user profile
 router.get('/profile/view', auth, async (req, res) => {  
+    console.log("Received request to view user profile"); // Log the request for debugging
     try {
-        const userId = req.user.id; // Assuming the user ID is stored in the token
+        const userId = req.user.userId; // Assuming the user ID is stored in the token
+
+        console.log("Received request to view user profile for user ID:", req.user); // Log the user ID for debugging
         const user = await User.findById(userId); // Find user by ID
         if (!user) {
         return res.status(404).send('User not found'); // Handle case where user is not found
         }
-        res.status(200).json(user); // Return user profile data
+        res.status(200).json({ message: "Data Fetched Successfully" , data:user });
     } catch (error) {
         console.error('Error fetching user profile:', error);
         res.status(500).send('Internal Server Error'); // Handle errors appropriately
@@ -73,4 +76,4 @@ router.post('/profile/chnagepasssword', auth, async (req, res) => {
 
 });
 
-
+module.exports = router; // Export the router for use in the main app file

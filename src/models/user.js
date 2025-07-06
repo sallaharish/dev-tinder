@@ -33,6 +33,11 @@ const userSchema = new mongoose.Schema({
         minlength: [6, 'Password must be at least 6 characters'],
         maxlength: [128, 'Password must be less than 128 characters']
     },
+    profilepicture: {
+        type: String,
+            
+
+    },
     age: {
         type: Number,
         required: [true, 'Age is required'],

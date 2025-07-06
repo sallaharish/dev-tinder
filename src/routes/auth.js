@@ -59,7 +59,7 @@ router.post("/login", async (req, res) => {
       res.cookie('token', token);
     }
     // Set the JWT token as a cookie
-    res.status(200).send('Login successful'); // Send success response
+    res.status(200).json({ message: "login successful" , data:user }); // Send success response
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).send('Internal Server Error'); // Handle errors appropriately
